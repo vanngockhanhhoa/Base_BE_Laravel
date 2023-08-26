@@ -1,0 +1,586 @@
+# Kakutenya
+
+#Group RC
+
+### Login [POST /login]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+
+    + Body
+
+            {
+                "email": "canhnnt@thefirstone.jp",
+                "password": "abcd@1234"
+            }
++ Response 200 (application/json)
+
+        {
+            "message": "Authenticated"
+            "token": "e2rxIQKGXEQneCLw"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Forget password [POST /forgetPassword]
+Sent mail to the inputted email address. Link to update password will be included in mail
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+
+    + Body
+
+            {
+                "email": "canhnnt@thefirstone.jp",
+            }
++ Response 200 (application/json)
+
+        {
+            "message": "Mail is sent"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Change password [POST /changePassword]
+Change password using form from reset password mail.
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+
+    + Body
+
+            {
+                "password": "abcd@1234",
+                "password_confirmation": "abcd@1234"
+            }
++ Response 200 (application/json)
+
+        {
+            "message": "Password is changed"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+
+## Users [/users{?page,per_page,email,name,role}]
+### List users [GET]
+Search users with condition
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + page (number, optional) - The pagination page no.
+    + per_page (number, optional) - Number of record is diplayed per page.
+    + email (string, optional) - searching mail param
+    + name (string, optional) - searching name param
+    + role (string, optional) - searching role param
+
++ Response 200 (application/json)
+
+        {
+            "users": [
+                {
+                    "name": "CanhNNT",
+                    "email": "canhnnt@thefirstone.jp",
+                    "role": "Admin"
+                }
+            ]
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+## Users [/users]
+### Create user [POST]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+    + Body
+
+            {
+                "email": "canhnnt1@thefirstone.jp",
+                "password": "abcd@1234",
+                "role": "Admin",
+                "name_kana": "グェン・ゴック・チャン・カイン"
+            }
++ Response 200 (application/json)
+
+        {
+            "user": {
+                "name": "CanhNNT",
+                "email": "canhnnt@thefirstone.jp"
+                "role": "Admin"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            message: "Authentication failed"
+        }
+
+## User [/user/{id}]
+### Get user information [GET]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + id:1 (number, required) - The pagination page no.
+
++ Response 200 (application/json)
+
+        {
+            "user": {
+                "name": "CanhNNT",
+                "email": "canhnnt@thefirstone.jp"
+                "role": "Admin"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Update user [PUT]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
+    + Body
+
+            {
+                "name": "CanhNNT",
+                "email": "canhnnt@thefirstone.jp"
+                "role": "Admin"
+            }
++ Parameters
+    + id:1 (number, required) - The pagination page no.
+
++ Response 200 (application/json)
+
+        {
+            "user": {
+                "name": "CanhNNT",
+                "email": "canhnnt@thefirstone.jp"
+                "role": "Admin"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Delete user [DELETE]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + id:1 (number, required) - The pagination page no.
+
++ Response 200 (application/json)
+
+        {
+           "message": "User deleted"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+
+## Order staffs [/order/{order_id}/staffs]
+### List order staffs [GET]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + order_id:1 (number, required) - Order id.
+
++ Response 200 (application/json)
+
+        {
+            "staffs": [
+                {
+                    "id": 1,
+                    "staff_code": "10185700",
+                    "name": "佐藤　英二",
+                    "department": "精肉",
+                    "gender": "男性",
+                    "size": "S",
+                    "customer": "customer A"
+                },
+                {
+                    "id": 2,
+                    "staff_code": "10204835",
+                    "name": "井坂　未歩",
+                    "department": "青果",
+                    "gender": "女性",
+                    "size": "L",
+                    "customer": "customer A"
+                }
+            ]
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Add order staff [POST]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
+    + Body
+
+            {
+                "staff_code": "10034483",
+                "name": "和田　千歳",
+                "department": "惣菜",
+                "gender": "男性",
+                "size": "M",
+                "customer_id": 1
+            }
++ Parameters
+    + order_id:1 (number, required) - Order id.
+
++ Response 200 (application/json)
+
+        {
+            "staff": {
+                "id": 3,
+                "staff_code": "10034483",
+                "name": "和田　千歳",
+                "department": "惣菜",
+                "gender": "男性",
+                "size": "M",
+                "customer": "customer A"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+
+## Order staff [/order/{order_id}/staff/{staff_code}]
+
+### Get order staff information [GET]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
++ Parameters
+    + order_id:1 (number, required) - Order id.
+    + staff_code:1 (number, required) - Staff id
+
++ Response 200 (application/json)
+
+        {
+            "staff": {
+                "id": 1,
+                "staff_code": "10185700",
+                "name": "佐藤　英二",
+                "department": "精肉",
+                "gender": "男性",
+                "size": "S"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Update order staff information [PUT]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+    + Body
+
+            {
+                "id": 3,
+                "staff_code": "10185700",
+                "name": "佐藤　英二",
+                "department": "精肉",
+                "gender": "男性",
+                "size": "L"
+            }
++ Parameters
+    + order_id:1 (number, required) - Order id.
+    + staff_code:10185700 (number, required) - Staff code
+
++ Response 200 (application/json)
+
+        {
+            "staff": {
+                "id": 3,
+                "staff_code": "10185700",
+                "name": "佐藤　英二",
+                "department": "精肉",
+                "gender": "男性",
+                "size": "L"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Delete order staff [DELETE]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + order_id:1 (number, required) - Order id.
+    + staff_code:10185700 (number, required) - Staff code
+
++ Response 200 (application/json)
+
+        {
+            "message": "Staff is deleted"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+
+## Item sets [/sets]
+
+### List sets [GET]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Response 200 (application/json)
+
+        {
+            "sets": [
+                {
+                    "id": 1,
+                    "name": "Set 1",
+                    "customer_name": "Customer A",
+                },
+                {
+                    "id": 2,
+                    "name": "Set 2",
+                    "customer_name": "Customer A",
+                },
+                {
+                    "id": 3,
+                    "name": "Set 3",
+                    "customer_name": "Customer A",
+                }
+            ]
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Create set [POST]
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
+    + Body
+
+            {
+                "name": "Set 4",
+                "customer_id": 1
+            }
++ Response 200 (application/json)
+
+        {
+            "set": {
+                "id": 4,
+                "name": "Set 4",
+                "customer_name": "Customer A",
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+## Item set [/set/{set_id}]
+
+### View set [GET]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + set_id:1 (number, required) - Set id
+    
++ Response 200 (application/json)
+
+        {
+            "set": {
+                "id": 1,
+                "name": "Set 1",
+                "customer_name": "Customer A",
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Update set [PUT]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
+    + Body
+
+            {
+                "id": 1
+                "name": "Set 11",
+                "customer_id": 2
+            }
+
++ Parameters
+    + set_id:1 (number, required) - Set id
+    
++ Response 200 (application/json)
+
+        {
+            "set": {
+                "id": 1,
+                "name": "Set 11",
+                "customer_name": "Customer B",
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
+
+### Delete set [DELETE]
+
++ Request
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer e2rxIQKGXEQneCLw
+
++ Parameters
+    + set_id:1 (number, required) - Set id
+    
++ Response 200 (application/json)
+
+        {
+            "set": {
+                "id": 1,
+                "name": "Set 11",
+                "customer_name": "Customer B",
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "message": "Authentication failed"
+        }
